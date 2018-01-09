@@ -34,8 +34,8 @@ document.addEventListener('DOMContentLoaded', function(){
 	var sensitivity = document.getElementById('sensitivity');
     var cw,ch;
     v.addEventListener('play', function(){
-       // cw = v.clientWidth;
-      //  ch = v.clientHeight;
+        cw = v.clientWidth;
+        ch = v.clientHeight;
         canvas.width = cw;
         canvas.height = ch;
         back.width = cw;
@@ -95,8 +95,8 @@ function getStream (type) {
     return;
   }
   var constraints = {};
-  constraints[type] = {width: { min: streamWidth, ideal: streamWidth, max: streamWidth },
-    height: { min: streamHeight, ideal:streamHeight , max: streamHeight }};
+  constraints[type] = {width: { min: cw, ideal: cw, max: cw },
+    height: { min: ch, ideal:ch , max: ch }};
   getUserMedia(constraints, function (stream) {
     var mediaControl = document.querySelector(type);
     if (navigator.mozGetUserMedia) {
