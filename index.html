@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function(){
     var backcontext = back.getContext('2d');
 	var sensitivity = document.getElementById('sensitivity');
     var cw,ch;
-v.height= document.getElementById('details').value;
+//v.height= document.getElementById('details').value;
     v.addEventListener('play', function(){
         cw = v.clientWidth;
         ch = v.clientHeight;
@@ -92,9 +92,9 @@ function getStream (type) {
     alert('User Media API not supported.');
     return;
   }
-
   var constraints = {};
-  constraints[type] = true;
+  constraints[type] = {width: { min: 400, ideal: document.body.offsetWidth/4, max: 2000 },
+    height: { min: 276, ideal: document.body.offsetHeight/4, max: 2080 }};
   getUserMedia(constraints, function (stream) {
     var mediaControl = document.querySelector(type);
     if (navigator.mozGetUserMedia) {
