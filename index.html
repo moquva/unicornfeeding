@@ -23,8 +23,8 @@ document.addEventListener('DOMContentLoaded', function(){
 	var sensitivity = document.getElementById('sensitivity');
     var cw,ch;
     v.addEventListener('play', function(){
-        //cw = v.clientWidth;
-        //ch = v.clientHeight;
+         ch=document.body.offsetHeight/4;
+   cw=document.body.offsetWidth/4;
         canvas.width = cw;
         canvas.height = ch;
         back.width = cw;
