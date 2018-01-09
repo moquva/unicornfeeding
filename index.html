@@ -93,8 +93,10 @@ function getStream (type) {
     return;
   }
   var constraints = {};
-  constraints[type] = {width: { min: 400, ideal: document.body.offsetWidth/4, max: 2000 },
-    height: { min: 276, ideal: document.body.offsetHeight/4, max: 2080 }};
+  var streamHeight=document.body.offsetHeight/4;
+  var streamWidth=document.body.offsetWidth/4;
+  constraints[type] = {width: { min: streamWidth, ideal: streamWidth, max: streamWidth },
+    height: { min: streamHeight, ideal:streamHeight , max: streamHeight }};
   getUserMedia(constraints, function (stream) {
     var mediaControl = document.querySelector(type);
     if (navigator.mozGetUserMedia) {
