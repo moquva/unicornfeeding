@@ -3,13 +3,7 @@
 html,body{height:100%;width:100%; background:grey;}
 *{margin:0;padding:0;overflow:hidden;}
 video{visibility:hidden;}
-canvas{
-position:absolute;
-overflow:hidden;
-top:100;
-left:0;height:100%;width:100%;
-margin:auto;
-}
+canvas{position:absolute;overflow:hidden;left:0;height:100%;width:100%;margin:auto;}
 </style>
 <video id="v" controls loop autoplay>
 </video>
@@ -29,8 +23,8 @@ document.addEventListener('DOMContentLoaded', function(){
 	var sensitivity = document.getElementById('sensitivity');
     var cw,ch;
     v.addEventListener('play', function(){
-        cw = v.clientWidth;
-        ch = v.clientHeight;
+        //cw = v.clientWidth;
+        //ch = v.clientHeight;
         canvas.width = cw;
         canvas.height = ch;
         back.width = cw;
@@ -105,18 +99,4 @@ function getStream (type) {
   });
 }
 getStream('video');
-function toggleFullScreen() {
-  var doc = window.document;
-  var docEl = doc.documentElement;
-
-  var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-  var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
-
-  if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
-    requestFullScreen.call(docEl);
-  }
-  else {
-    cancelFullScreen.call(doc);
-  }
-}toggleFullScreen();
 </script>
