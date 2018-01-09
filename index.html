@@ -8,7 +8,7 @@ visibility:hidden;
 }
 #v{
 height:15%;}
-#c{
+canvas{
 position:absolute;
 overflow:hidden;
 top:0;
@@ -22,6 +22,9 @@ margin:auto;
 <input id="details" type="range" value="15" min="5" max="100" step="1"/>
 <canvas id="c"></canvas>
 <script>
+
+  var streamHeight=document.body.offsetHeight/4;
+  var streamWidth=document.body.offsetWidth/4;
 document.addEventListener('DOMContentLoaded', function(){
     var v = document.getElementById('v');
     var canvas = document.getElementById('c');
@@ -30,7 +33,6 @@ document.addEventListener('DOMContentLoaded', function(){
     var backcontext = back.getContext('2d');
 	var sensitivity = document.getElementById('sensitivity');
     var cw,ch;
-//v.height= document.getElementById('details').value;
     v.addEventListener('play', function(){
         cw = v.clientWidth;
         ch = v.clientHeight;
@@ -93,8 +95,6 @@ function getStream (type) {
     return;
   }
   var constraints = {};
-  var streamHeight=document.body.offsetHeight/4;
-  var streamWidth=document.body.offsetWidth/4;
   constraints[type] = {width: { min: streamWidth, ideal: streamWidth, max: streamWidth },
     height: { min: streamHeight, ideal:streamHeight , max: streamHeight }};
   getUserMedia(constraints, function (stream) {
