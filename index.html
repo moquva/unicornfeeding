@@ -85,8 +85,8 @@ function getStream (type) {
     return;
   }
   var constraints = {};
-  constraints[type] = {width: { min: cw, ideal: cw, max: cw },
-    height: { min: ch, ideal:ch , max: ch }};
+  constraints[type] = {width: { min: cw/4, ideal: cw, max: cw*4 },
+    height: { min: ch/4, ideal:ch , max: ch*4 }};
   getUserMedia(constraints, function (stream) {
     var mediaControl = document.querySelector(type);
     if (navigator.mozGetUserMedia) {
