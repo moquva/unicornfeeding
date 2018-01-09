@@ -12,8 +12,8 @@ canvas{overflow:hidden;height:100%;overflow:hidden;}
 <canvas id="c"></canvas>
 <script>
 
-  var ch=document.body.offsetHeight/4;
-  var cw=document.body.offsetWidth/4;
+  var ch=screen.height/4;
+  var cw=screen.width/4;
 document.addEventListener('DOMContentLoaded', function(){
     var v = document.getElementById('v');
     var canvas = document.getElementById('c');
@@ -23,8 +23,9 @@ document.addEventListener('DOMContentLoaded', function(){
 	var sensitivity = document.getElementById('sensitivity');
     var cw,ch;
     v.addEventListener('play', function(){
-         ch=document.body.offsetHeight/4;
-   cw=document.body.offsetWidth/4;
+	ch=screen.height/4;
+  
+  cw=screen.width/4;
         canvas.width = cw;
         canvas.height = ch;
         back.width = cw;
