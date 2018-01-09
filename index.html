@@ -1,0 +1,125 @@
+<link rel="manifest" href="manifest.json">
+<style>
+html,body{height:100%;width:100%; background:green;}
+*{margin:0;padding:0;overflow:hidden;}
+video
+{
+visibility:hidden;
+}
+#v{
+height:15%;}
+#c{
+position:absolute;
+overflow:hidden;
+top:0;
+left:0;min-height:100%;min-width:100%;
+margin:auto;
+}
+</style>
+<video id="v" controls loop autoplay>
+</video>
+<input id="sensitivity" type="range" value="1.18" min="1" max="2" step="0.01"/>
+<input id="details" type="range" value="15" min="5" max="100" step="1"/>
+<canvas id="c"></canvas>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+    var v = document.getElementById('v');
+    var canvas = document.getElementById('c');
+    var context = canvas.getContext('2d');
+    var back = document.createElement('canvas');
+    var backcontext = back.getContext('2d');
+	var sensitivity = document.getElementById('sensitivity');
+    var cw,ch;
+v.height= document.getElementById('details').value;
+    v.addEventListener('play', function(){
+        cw = v.clientWidth;
+        ch = v.clientHeight;
+        canvas.width = cw;
+        canvas.height = ch;
+        back.width = cw;
+        back.height = ch;
+        draw(v,context,backcontext,cw,ch);
+    },false);
+
+},false);
+
+function draw(v,c,bc,w,h) {
+    if(v.paused || v.ended) return false;
+    // First, draw it into the backing canvas
+    bc.drawImage(v,0,0,w,h);
+    // Grab the pixel data from the backing canvas
+    var idata = bc.getImageData(0,0,w,h);
+    var data = idata.data;
+		var slider = sensitivity.value;
+    // Loop through the pixels, turning them grayscale
+    for(var i = 0; i < data.length; i+=4) {
+        var r = data[i];
+        var g = data[i+1];
+        var b = data[i+2];
+		if( g<r*slider || g<b*slider)
+		{
+        var brightness = (r+g+b);
+        data[i] = brightness;
+		brightness/=3;
+        data[i+1] = brightness;
+        data[i+2] = brightness;}
+		else
+		{
+		
+        data[i] = (r+b)/2;
+        data[i+1] = g*1.5;
+        data[i+2] = b/2;
+		}
+    }
+    idata.data = data;
+    // Draw the pixels onto the visible canvas
+    c.putImageData(idata,0,0);
+    // Start over!
+    setTimeout(function(){ draw(v,c,bc,w,h); }, 0);
+}
+
+function getUserMedia(options, successCallback, failureCallback) {
+  var api = navigator.getUserMedia || navigator.webkitGetUserMedia ||
+    navigator.mozGetUserMedia || navigator.msGetUserMedia;
+  if (api) {
+    return api.bind(navigator)(options, successCallback, failureCallback);
+  }
+}
+
+function getStream (type) {
+  if (!navigator.getUserMedia && !navigator.webkitGetUserMedia &&
+    !navigator.mozGetUserMedia && !navigator.msGetUserMedia) {
+    alert('User Media API not supported.');
+    return;
+  }
+
+  var constraints = {};
+  constraints[type] = true;
+  getUserMedia(constraints, function (stream) {
+    var mediaControl = document.querySelector(type);
+    if (navigator.mozGetUserMedia) {
+      mediaControl.mozSrcObject = stream;
+    } else {
+      mediaControl.srcObject = stream;
+      mediaControl.src = (window.URL || window.webkitURL).createObjectURL(stream);
+    }
+  }, function (err) {
+    alert('Error: ' + err);
+  });
+}
+getStream('video');
+function toggleFullScreen() {
+  var doc = window.document;
+  var docEl = doc.documentElement;
+
+  var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+  var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+  if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+    requestFullScreen.call(docEl);
+  }
+  else {
+    cancelFullScreen.call(doc);
+  }
+}toggleFullScreen();
+</script>
