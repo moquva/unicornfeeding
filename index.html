@@ -23,8 +23,8 @@ margin:auto;
 <canvas id="c"></canvas>
 <script>
 
-  var streamHeight=document.body.offsetHeight/4;
-  var streamWidth=document.body.offsetWidth/4;
+  var ch=document.body.offsetHeight/4;
+  var cw=document.body.offsetWidth/4;
 document.addEventListener('DOMContentLoaded', function(){
     var v = document.getElementById('v');
     var canvas = document.getElementById('c');
@@ -34,8 +34,8 @@ document.addEventListener('DOMContentLoaded', function(){
 	var sensitivity = document.getElementById('sensitivity');
     var cw,ch;
     v.addEventListener('play', function(){
-        cw = v.clientWidth;
-        ch = v.clientHeight;
+       // cw = v.clientWidth;
+      //  ch = v.clientHeight;
         canvas.width = cw;
         canvas.height = ch;
         back.width = cw;
