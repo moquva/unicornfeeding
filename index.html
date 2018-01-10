@@ -84,9 +84,10 @@ function getStream (type) {
     return;
   }
   var constraints = {};
-  constraints[type] = {facingMode: 'environment',width: { min: cw/4, ideal: cw, max: cw*4 },
-    height: { min: ch/4, ideal:ch , max: ch*4 }};
+  constraints[type] = {facingMode: 'environment',width: { ideal: cw}, height: {ideal:ch}};
   getUserMedia(constraints, function (stream) {
+  const track = stream.getVideoTracks()[0];
+  track.applyConstraints({width: { ideal: cw}, height: {ideal:ch},advanced: [{torch: true}]});
     var mediaControl = document.querySelector(type);
     if (navigator.mozGetUserMedia) {
       mediaControl.mozSrcObject = stream;
