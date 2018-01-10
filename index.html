@@ -12,8 +12,8 @@ canvas{overflow:hidden;height:100%;overflow:hidden;}
 <canvas id="c"></canvas>
 <script>
 
-  var ch=screen.height/4;
-  var cw=screen.width/4;
+  var ch=screen.height/2;
+  var cw=screen.width/2;
 document.addEventListener('DOMContentLoaded', function(){
     var v = document.getElementById('v');
     var canvas = document.getElementById('c');
@@ -23,9 +23,8 @@ document.addEventListener('DOMContentLoaded', function(){
 	var sensitivity = document.getElementById('sensitivity');
     var cw,ch;
     v.addEventListener('play', function(){
-	ch=screen.height/4;
-  
-  cw=screen.width/4;
+	ch=screen.height/2;  
+  cw=screen.width/2;
         canvas.width = cw;
         canvas.height = ch;
         back.width = cw;
@@ -85,7 +84,7 @@ function getStream (type) {
     return;
   }
   var constraints = {};
-  constraints[type] = {width: { min: cw/4, ideal: cw, max: cw*4 },
+  constraints[type] = {facingMode: 'environment',width: { min: cw/4, ideal: cw, max: cw*4 },
     height: { min: ch/4, ideal:ch , max: ch*4 }};
   getUserMedia(constraints, function (stream) {
     var mediaControl = document.querySelector(type);
